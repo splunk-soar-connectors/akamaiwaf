@@ -608,6 +608,35 @@ class AkamaiNetworkListsConnector(BaseConnector):
         action_result.add_data(response)
 
         return action_result.set_status(phantom.APP_SUCCESS)
+        
+    def _handle_get_siteshields(self, param):
+
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        
+        # make rest call
+        endpoint = "../../siteshield/v1/maps"
+        ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None)
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+            
+        siteShieldsData = response
+
+        # Get ips from response. The full policy structure is required (policySettings[0] must be created)
+        for siteShield in siteShieldsData["siteShieldMaps"]:
+            for ipRange in siteShield["currentCidrs"]:
+                action_result.add_data({"cidr": ipRange})
+        
+        self.save_progress("Action handler for: {0} ended".format(self.get_action_identifier()))
+        
+        # Add a dictionary that is made up of the most important values from data into the summary
+        summary = action_result.update_summary({})
+        summary['num_data'] = action_result.get_data_size()
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def handle_action(self, param):
         """ This function gets current action identifier and calls member function of its own to handle the action.
@@ -628,7 +657,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
             'activate_network': self._handle_activate_network,
             'activation_status': self._handle_activation_status,
             'activation_snapshot': self._handle_activation_snapshot,
-            'activation_details': self._handle_activation_details
+            'activation_details': self._handle_activation_details,
+            'get_siteshields': self._handle_get_siteshields
         }
 
         action = self.get_action_identifier()
