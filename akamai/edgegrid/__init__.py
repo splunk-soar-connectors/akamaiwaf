@@ -2,8 +2,8 @@
 akamai.edgegrid
 ~~~~~~~~~~~~~~~
 
-This library provides an authentication handler for Requests that implements the 
-Akamai {OPEN} EdgeGrid client authentication protocol as 
+This library provides an authentication handler for Requests that implements the
+Akamai {OPEN} EdgeGrid client authentication protocol as
 specified by https://developer.akamai.com/introduction/Client_Auth.html.
 For more information visit https://developer.akamai.com.
 
@@ -17,7 +17,7 @@ usage:
     >>> s = requests.Session()
     >>> s.auth = EdgeGridAuth(
         client_token='akab-XXXXXXXXXXXXXXXXXXXXXXX',
-        client_secret='YYYYYYYYYYYYYYYYYYYYYYYYYY',
+        client_secret='YYYYYYYYYYYYYYYYYYYYYYYYYY',  # pragma: allowlist secret
         access_token='akab-ZZZZZZZZZZZZZZZZZZZZZZZZZZZ'
     )
 
@@ -32,6 +32,7 @@ usage:
 
 from .edgegrid import EdgeGridAuth
 from .edgerc import EdgeRc
+
 __all__=['EdgeGridAuth', 'EdgeRc']
 
 __title__ = 'edgegrid-python'
@@ -41,7 +42,7 @@ __license__ = 'Apache 2.0'
 __copyright__ = 'Copyright 2014 Akamai Technologies'
 
 # Copyright 2014 Akamai Technologies, Inc. All Rights Reserved
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at

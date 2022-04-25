@@ -8,13 +8,14 @@
     "logo_dark": "logo_akamaiwaf_dark.svg",
     "product_name": "Network Lists",
     "product_version_regex": ".*",
-    "publisher": "Robert Drouin",
+    "publisher": "Third-party",
     "license": "Copyright (c) Robert Drouin, 2021",
-    "app_version": "1.0.2.1",
+    "app_version": "1.1.0",
     "utctime_updated": "2022-01-07T21:55:37.000000Z",
     "package_name": "phantom_akamainetworklists",
-    "main_module": "akamaiwaf_connector.pyc",
-    "min_phantom_version": "4.9.39220",
+    "python_version": "2.7",
+    "main_module": "akamaiwaf_connector.py",
+    "min_phantom_version": "5.2.0",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "base_url": {
@@ -1568,17 +1569,24 @@
             "type": "investigate",
             "identifier": "get_siteshields",
             "read_only": true,
-            "parameters": {
-            },
+            "parameters": {},
             "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 0
+                    "column_name": "Status",
+                    "column_order": 0,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.cidr",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
                     "data_type": "string"
                 },
                 {
