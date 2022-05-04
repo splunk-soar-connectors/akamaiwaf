@@ -7,7 +7,7 @@
 # For more information visit https://developer.akamai.com
 
 # Copyright 2014 Akamai Technologies, Inc. All Rights Reserved
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -19,26 +19,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# flake8: noqa
 
-import requests
-import logging
-import uuid
+import base64
 import hashlib
 import hmac
-import base64
+import logging
+import os
 import re
 import sys
-import os
-from requests.auth import AuthBase
+import uuid
 from time import gmtime, strftime
+
+import requests
+from requests.auth import AuthBase
 
 if sys.version_info[0] >= 3:
     # python3
-    from urllib.parse import urlparse, parse_qsl, urlunparse
+    from urllib.parse import parse_qsl, urlparse, urlunparse
 else:
     # python2.7
-    from urlparse import urlparse, parse_qsl, urlunparse
     import urllib3.contrib.pyopenssl
+    from urlparse import parse_qsl, urlparse, urlunparse
     urllib3.contrib.pyopenssl.inject_into_urllib3()
 
 logger = logging.getLogger(__name__)
@@ -70,13 +72,13 @@ class EdgeGridAuth(AuthBase):
         >>> s = requests.Session()
         >>> s.auth = EdgeGridAuth(
             client_token='cccccccccccccccccc',
-            client_secret='sssssssssssssssss',
+            client_secret='sssssssssssssssss',  # pragma: allowlist secret
             access_token='aaaaaaaaaaaaaaaaa'
         )
 
     """
 
-    def __init__(self, client_token, client_secret, access_token, 
+    def __init__(self, client_token, client_secret, access_token,
                  headers_to_sign=None, max_body=131072):
         """Initialize authentication using the given parameters from the Luna Manage APIs
            Interface:
@@ -84,7 +86,7 @@ class EdgeGridAuth(AuthBase):
         :param client_token: Client token provided by "Credentials" ui
         :param client_secret: Client secret provided by "Credentials" ui
         :param access_token: Access token provided by "Authorizations" ui
-        :param headers_to_sign: An ordered list header names that will be included in 
+        :param headers_to_sign: An ordered list header names that will be included in
             the signature.  This will be provided by specific APIs. (default [])
         :param max_body: Maximum content body size for POST requests. This will be provided by
             specific APIs. (default 131072)
@@ -103,15 +105,15 @@ class EdgeGridAuth(AuthBase):
 
     @staticmethod
     def from_edgerc(rcinput, section='default'):
-        """Returns an EdgeGridAuth object from the configuration from the given section of the 
+        """Returns an EdgeGridAuth object from the configuration from the given section of the
            given edgerc file.
 
         :param filename: path to the edgerc file
-        :param section: the section to use (this is the [bracketed] part of the edgerc, 
+        :param section: the section to use (this is the [bracketed] part of the edgerc,
             default is 'default')
 
         """
-        from .edgerc import EdgeRc 
+        from .edgerc import EdgeRc
         if isinstance(rcinput, EdgeRc):
             rc = rcinput
         else:
@@ -149,7 +151,7 @@ class EdgeGridAuth(AuthBase):
             logger.debug("signing content: %s", prepared_body)
             if len(prepared_body) > self.max_body:
                 logger.debug(
-                    "data length %d is larger than maximum %d", 
+                    "data length %d is larger than maximum %d",
                     len(prepared_body), self.max_body
                 )
                 prepared_body = prepared_body[0:self.max_body]
@@ -208,7 +210,7 @@ class EdgeGridAuth(AuthBase):
 
     def sign_request(self, r, timestamp, auth_header):
         return base64_hmac_sha256(
-            self.make_data_to_sign(r, auth_header), 
+            self.make_data_to_sign(r, auth_header),
             self.make_signing_key(timestamp)
         )
 
