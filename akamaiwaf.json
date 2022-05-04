@@ -1564,10 +1564,10 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "get siteshields",
+            "action": "list siteshields",
             "description": "Get akamai site shields ip ranges",
             "type": "investigate",
-            "identifier": "get_siteshields",
+            "identifier": "list_siteshields",
             "read_only": true,
             "parameters": {},
             "output": [
@@ -1583,7 +1583,10 @@
                 },
                 {
                     "data_path": "action_result.data.*.cidr",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "202.31.0.0/16"
+                    ]
                 },
                 {
                     "data_path": "action_result.message",

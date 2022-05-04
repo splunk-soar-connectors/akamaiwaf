@@ -625,7 +625,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_get_siteshields(self, param):
+    def _handle_list_siteshields(self, param):
 
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
 
@@ -633,16 +633,14 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         # make rest call
         endpoint = "../../siteshield/v1/maps"
-        ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None)
+        ret_val, site_shields_data = self._make_rest_call(endpoint, action_result, params=None, headers=None)
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        siteShieldsData = response
-
         # Get ips from response. The full policy structure is required (policySettings[0] must be created)
-        for siteShield in siteShieldsData["siteShieldMaps"]:
-            for ipRange in siteShield["currentCidrs"]:
-                action_result.add_data({"cidr": ipRange})
+        for site_shield in site_shields_data["siteShieldMaps"]:
+            for ip_range in site_shield["currentCidrs"]:
+                action_result.add_data({"cidr": ip_range})
 
         self.save_progress("Action handler for: {0} ended".format(self.get_action_identifier()))
 
@@ -674,7 +672,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
             'activation_status': self._handle_activation_status,
             'activation_snapshot': self._handle_activation_snapshot,
             'activation_details': self._handle_activation_details,
-            'get_siteshields': self._handle_get_siteshields
+            'list_siteshields': self._handle_list_siteshields
         }
 
         action = self.get_action_identifier()
