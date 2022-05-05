@@ -3,16 +3,18 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 # Phantom App imports
+import json
+import sys
+
 import phantom.app as phantom
-from phantom.base_connector import BaseConnector
+import requests
+from bs4 import BeautifulSoup, UnicodeDammit
 from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
 # Usage of the consts file is recommended
 from akamaiwaf_consts import *
-import requests
-import json
-import sys
-from bs4 import BeautifulSoup, UnicodeDammit
+
 try:
     from urllib import unquote
 except:
@@ -116,7 +118,11 @@ class AkamaiNetworkListsConnector(BaseConnector):
         if response.status_code == 200:
             return RetVal(phantom.APP_SUCCESS, {})
 
-        return RetVal(action_result.set_status(phantom.APP_ERROR, "Status Code: {}. Empty response and no information in the header".format(response.status_code)), None)
+        return RetVal(
+            action_result.set_status(
+                phantom.APP_ERROR, "Status Code: {}. Empty response and no information in the header".format(response.status_code)),
+            None
+        )
 
     def _process_html_response(self, response, action_result):
 
@@ -328,7 +334,9 @@ class AkamaiNetworkListsConnector(BaseConnector):
             # Can assign manually but it wont be as flexible if the API changes.
             params = {'element': self._handle_py_ver_compat_for_input_str(param.get('elements'))}
 
-            endpoint = self._process_parameters("{}/{}/elements".format(AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid'))), params)
+            endpoint = self._process_parameters(
+                "{}/{}/elements".format(AKAMAI_NETWORK_LIST_ENDPOINT,
+                self._handle_py_ver_compat_for_input_str(param.get('networklistid'))), params)
 
             # make rest call
             ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="put")
@@ -367,12 +375,15 @@ class AkamaiNetworkListsConnector(BaseConnector):
             # Can assign manually but it wont be as flexible if the API changes.
             params = {'element': self._handle_py_ver_compat_for_input_str(param.get('elements'))}
 
-            endpoint = self._process_parameters("{}/{}/elements".format(AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid'))), params)
+            endpoint = self._process_parameters(
+                "{}/{}/elements".format(AKAMAI_NETWORK_LIST_ENDPOINT,
+                self._handle_py_ver_compat_for_input_str(param.get('networklistid'))), params)
 
             # make rest call
             ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="delete")
         else:
-            # This is a hack to remove multiple elements at a time. I use the "Update a network list" API to be able to remove multiple IP's / CIDR's.
+            # This is a hack to remove multiple elements at a time. I use the "Update a network list" API to be able to remove
+            # multiple IP's / CIDR's.
 
             # Need to get the list of items before we can remove them. We also need other data to be able to update the network list.
             # Format the URI
@@ -390,7 +401,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
                 # Index is used to pop the item from the list
                 index = 0
                 # Loop through the current list of addresses
-                for network in networkList:
+                for network in networkList:  # nosemgrep
                     if item == network:
                         networkList.pop(index)
                     index += 1
@@ -434,7 +445,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         type = self._handle_py_ver_compat_for_input_str(param.get('type'))
         if type not in TYPE_VALUE_LIST:
-            return action_result.set_status(phantom.APP_ERROR, "Please provide valid input from {} in 'type' action parameter".format(TYPE_VALUE_LIST))
+            return action_result.set_status(
+                phantom.APP_ERROR, "Please provide valid input from {} in 'type' action parameter".format(TYPE_VALUE_LIST))
 
         data = {
             "name": self._handle_py_ver_compat_for_input_str(param.get('name')),
@@ -526,9 +538,11 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         environment = self._handle_py_ver_compat_for_input_str(param.get('environment'))
         if environment not in ENVIRONMENT_VALUE_LIST:
-            return action_result.set_status(phantom.APP_ERROR, "Please provide valid input from {} in 'environment' action parameter".format(ENVIRONMENT_VALUE_LIST))
+            return action_result.set_status(
+                phantom.APP_ERROR, "Please provide valid input from {} in 'environment' action parameter".format(ENVIRONMENT_VALUE_LIST))
 
-        endpoint = "{}/{}/environments/{}/activate".format(AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')), environment)
+        endpoint = "{}/{}/environments/{}/activate".format(
+            AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')), environment)
 
         # make rest call
         ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="post", json=data)
@@ -548,9 +562,11 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         environment = self._handle_py_ver_compat_for_input_str(param.get('environment'))
         if environment not in ENVIRONMENT_VALUE_LIST:
-            return action_result.set_status(phantom.APP_ERROR, "Please provide valid input from {} in 'environment' action parameter".format(ENVIRONMENT_VALUE_LIST))
+            return action_result.set_status(
+                phantom.APP_ERROR, "Please provide valid input from {} in 'environment' action parameter".format(ENVIRONMENT_VALUE_LIST))
 
-        endpoint = "{}/{}/environments/{}/status".format(AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')), environment)
+        endpoint = "{}/{}/environments/{}/status".format(
+            AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')), environment)
 
         # make rest call
         ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None)
@@ -575,7 +591,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
             return action_result.get_status()
 
         endpoint = self._process_parameters("{}/{}/sync-points/{}/history".format(AKAMAI_NETWORK_LIST_ENDPOINT,
-                                                                            self._handle_py_ver_compat_for_input_str(param.get('networklistid')), syncpoint), params)
+            self._handle_py_ver_compat_for_input_str(param.get('networklistid')), syncpoint), params)
 
         # make rest call
         ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None)
@@ -609,6 +625,33 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _handle_list_siteshields(self, param):
+
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # make rest call
+        endpoint = "../../siteshield/v1/maps"
+        ret_val, site_shields_data = self._make_rest_call(endpoint, action_result, params=None, headers=None)
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+
+        # Get ips from response. The full policy structure is required (policySettings[0] must be created)
+        for site_shield in site_shields_data["siteShieldMaps"]:
+            for ip_range in site_shield["currentCidrs"]:
+                action_result.add_data({"cidr": ip_range})
+
+        self.save_progress("Action handler for: {0} ended".format(self.get_action_identifier()))
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        summary = action_result.update_summary({})
+        summary['num_data'] = action_result.get_data_size()
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
     def handle_action(self, param):
         """ This function gets current action identifier and calls member function of its own to handle the action.
         :param param: dictionary which contains information about the actions to be executed
@@ -628,7 +671,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
             'activate_network': self._handle_activate_network,
             'activation_status': self._handle_activation_status,
             'activation_snapshot': self._handle_activation_snapshot,
-            'activation_details': self._handle_activation_details
+            'activation_details': self._handle_activation_details,
+            'list_siteshields': self._handle_list_siteshields
         }
 
         action = self.get_action_identifier()
@@ -703,12 +747,14 @@ if __name__ == '__main__':
     argparser.add_argument('input_test_json', help='Input Test JSON file')
     argparser.add_argument('-u', '--username', help='username', required=False)
     argparser.add_argument('-p', '--password', help='password', required=False)
+    argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
 
     args = argparser.parse_args()
     session_id = None
 
     username = args.username
     password = args.password
+    verify = args.verify
 
     if username is not None and password is None:
 
@@ -721,7 +767,7 @@ if __name__ == '__main__':
             login_url = AkamaiNetworkListsConnector._get_phantom_base_url() + '/login'
 
             print("Accessing the Login page")
-            r = requests.get(login_url, verify=False)
+            r = requests.get(login_url, verify=verify, timeout=DEFAULT_TIMEOUT)
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -734,11 +780,11 @@ if __name__ == '__main__':
             headers['Referer'] = login_url
 
             print("Logging into Platform to get the session id")
-            r2 = requests.post(login_url, verify=False, data=data, headers=headers)
+            r2 = requests.post(login_url, verify=verify, data=data, headers=headers, timeout=DEFAULT_TIMEOUT)
             session_id = r2.cookies['sessionid']
         except Exception as e:
             print("Unable to get session id from the platform. Error: " + str(e))
-            exit(1)
+            sys.exit(1)
 
     with open(args.input_test_json) as f:
         in_json = f.read()
@@ -755,4 +801,4 @@ if __name__ == '__main__':
         ret_val = connector._handle_action(json.dumps(in_json), None)
         print(json.dumps(json.loads(ret_val), indent=4))
 
-    exit(0)
+    sys.exit(0)
