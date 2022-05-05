@@ -7,6 +7,8 @@ AKAMAI_API_PATH = '/network-list/v2/'
 AKAMAI_NETWORK_LIST_ENDPOINT = 'network-lists'
 AKAMAI_ACTIVATIONS_ENDPOINT = 'activations'
 
+DEFAULT_TIMEOUT = 30
+
 # Constants relating to '_get_error_message_from_exception'
 ERR_CODE_MSG = "Error code unavailable"
 ERR_MSG_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and|or action parameters"
