@@ -20,7 +20,7 @@
     "package_name": "phantom_akamainetworklists",
     "python_version": "3",
     "main_module": "akamaiwaf_connector.py",
-    "min_phantom_version": "5.2.0",
+    "min_phantom_version": "6.0.2",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "base_url": {
