@@ -152,8 +152,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
         try:
             resp_json = r.json()
         except Exception as e:
-            err = self._get_error_message_from_exception(e)
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(err)), None)
+            error = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(error)), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
@@ -227,8 +227,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
             error_message = "Error Details: Connection Refused from the Server"
             return RetVal(action_result.set_status(phantom.APP_ERROR, error_message), resp_json)
         except Exception as e:
-            err = self._get_error_message_from_exception(e)
-            return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(err)), resp_json)
+            error_message = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(error_message)), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -394,8 +394,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
             try:
                 networkList = response['list']
             except Exception as e:
-                err = self._get_error_message_from_exception(e)
-                return action_result.set_status(phantom.APP_ERROR, "Error occurred while processing the response. {}".format(err))
+                error_message = self._get_error_message_from_exception(e)
+                return action_result.set_status(phantom.APP_ERROR, "Error occurred while processing the response. {}".format(error_message))
             # Loop through the parameters passed.
             for item in param_elements:
                 # Index is used to pop the item from the list
