@@ -125,7 +125,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
@@ -291,7 +291,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
@@ -414,7 +414,7 @@
                     "order": 3,
                     "allow_list": true,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ],
                     "primary": true
                 }
@@ -436,7 +436,7 @@
                     "data_path": "action_result.parameter.list",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
@@ -463,7 +463,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
@@ -679,7 +679,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
@@ -760,7 +760,7 @@
                     "order": 1,
                     "allow_list": true,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ],
                     "primary": true
                 }
@@ -777,7 +777,7 @@
                     "data_path": "action_result.parameter.elements",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
@@ -804,7 +804,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
@@ -891,7 +891,7 @@
                     "order": 1,
                     "allow_list": true,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ],
                     "primary": true
                 }
@@ -908,7 +908,7 @@
                     "data_path": "action_result.parameter.elements",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
@@ -935,7 +935,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
@@ -1366,7 +1366,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip"
+                        "ip", "ipv6"
                     ]
                 },
                 {
