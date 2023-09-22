@@ -2,15 +2,15 @@
 # Akamai WAF
 
 Publisher: Robert Drouin  
-Connector Version: 1\.0\.1  
+Connector Version: 1\.1\.0  
 Product Vendor: Akamai  
 Product Name: Network Lists  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 4\.9\.39220  
+Minimum Product Version: 5\.2\.0  
 
 The WAF API allows you to manage a common set of lists for use in various Akamai security products such as Kona Site Defender, Web App Protector, and Bot Manager
 
-[comment]: # "File: readme.md"
+[comment]: # "File: README.md"
 [comment]: # ""
 [comment]: # "    Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)"
 [comment]: # ""
@@ -18,6 +18,16 @@ The Network Lists API allows you to manage a common set of lists for use in vari
 products such as Kona Site Defender, Web App Protector, and Bot Manager. Network lists are shared
 sets of IP addresses, CIDR blocks, or broad geographic areas. Along with managing your own lists,
 you can also access read-only lists that Akamai dynamically updates for you.
+
+## Port Information
+
+The app uses HTTP/ HTTPS protocol for communicating with the Akamai WAF server. Below are the
+default ports used by Splunk SOAR.
+
+|         Service Name | Transport Protocol | Port |
+|----------------------|--------------------|------|
+|         http         | tcp                | 80   |
+|         https        | tcp                | 443  |
 
 
 ### Configuration Variables
@@ -43,6 +53,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [activation status](#action-activation-status) - Shows a network list activation status on either the STAGING or PRODUCTION environment  
 [activation snapshot](#action-activation-snapshot) - Gets a version of a network list  
 [activation details](#action-activation-details) - Provides detailed status for a given activation  
+[list siteshields](#action-list-siteshields) - Get akamai site shields ip ranges  
 
 ## action: 'test connectivity'
 Validate the asset configuration for connectivity using the supplied configuration
@@ -415,5 +426,24 @@ action\_result\.data\.\*\.uniqueId | string |  `akamai networklist id`
 action\_result\.status | string | 
 action\_result\.message | string | 
 action\_result\.summary | string | 
+summary\.total\_objects | numeric | 
+summary\.total\_objects\_successful | numeric |   
+
+## action: 'list siteshields'
+Get akamai site shields ip ranges
+
+Type: **investigate**  
+Read only: **True**
+
+#### Action Parameters
+No parameters are required for this action
+
+#### Action Output
+DATA PATH | TYPE | CONTAINS
+--------- | ---- | --------
+action\_result\.status | string | 
+action\_result\.data\.\*\.cidr | string | 
+action\_result\.message | string | 
+action\_result\.summary\.num\_data | string | 
 summary\.total\_objects | numeric | 
 summary\.total\_objects\_successful | numeric | 

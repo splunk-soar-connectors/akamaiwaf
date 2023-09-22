@@ -22,7 +22,6 @@
             "description": "Base URL for the API. This URL is given to you when you setup the API Client in the Akamai Control Center. e.g. https://akaa-WWWWWWWWWWWW.luna.akamaiapis.net",
             "data_type": "string",
             "required": true,
-            "required": true,
             "order": 0
         },
         "access_token": {
