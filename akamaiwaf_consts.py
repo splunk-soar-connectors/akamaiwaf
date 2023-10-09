@@ -1,5 +1,7 @@
 # File: akamaiwaf_consts.py
 #
+# Copyright (c) Robert Drouin, 2021-2023
+#
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 # Define your constants here

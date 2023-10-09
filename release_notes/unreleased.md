@@ -1,1 +1,2 @@
 **Unreleased**
+* Released app with Python 3 support
