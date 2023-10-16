@@ -1,5 +1,7 @@
 # File: akamaiwaf_connector.py
 #
+# Copyright (c) Robert Drouin, 2021-2023
+#
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 # Phantom App imports
@@ -8,7 +10,7 @@ import sys
 
 import phantom.app as phantom
 import requests
-from bs4 import BeautifulSoup, UnicodeDammit
+from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
@@ -41,24 +43,6 @@ class AkamaiNetworkListsConnector(BaseConnector):
         self._client_secret = None
         self._access_token = None
 
-    def _handle_py_ver_compat_for_input_str(self, input_str):
-        """
-        This method returns the encoded|original string based on the Python version.
-        :param input_str: Input string to be processed
-        :return: input_str (Processed input string based on following logic 'input_str - Python 3; encoded input_str - Python 2')
-        """
-
-        try:
-            if input_str and self._python_version == 2:
-
-                input_str = UnicodeDammit(
-                    input_str).unicode_markup.encode('utf-8')
-        except:
-            self.debug_print(
-                "Error occurred while handling python 2to3 compatibility for the input string")
-
-        return input_str
-
     def _validate_integer(self, action_result, parameter, key):
         if parameter is not None:
             try:
@@ -84,32 +68,32 @@ class AkamaiNetworkListsConnector(BaseConnector):
             if e.args:
                 if len(e.args) > 1:
                     error_code = e.args[0]
-                    error_msg = e.args[1]
+                    error_message = e.args[1]
                 elif len(e.args) == 1:
-                    error_code = ERR_CODE_MSG
-                    error_msg = e.args[0]
+                    error_code = ERROR_CODE_MSG
+                    error_message = e.args[0]
             else:
-                error_code = ERR_CODE_MSG
-                error_msg = ERR_MSG_UNAVAILABLE
+                error_code = ERROR_CODE_MSG
+                error_message = ERROR_MSG_UNAVAILABLE
         except:
-            error_code = ERR_CODE_MSG
-            error_msg = ERR_MSG_UNAVAILABLE
+            error_code = ERROR_CODE_MSG
+            error_message = ERROR_MSG_UNAVAILABLE
 
         try:
-            error_msg = self._handle_py_ver_compat_for_input_str(error_msg)
+            error_message = error_message
         except TypeError:
-            error_msg = TYPE_ERR_MSG
+            error_message = TYPE_ERROR_MSG
         except:
-            error_msg = ERR_MSG_UNAVAILABLE
+            error_message = ERROR_MSG_UNAVAILABLE
 
         try:
-            if error_code in ERR_CODE_MSG:
-                error_text = "Error Message: {0}".format(error_msg)
+            if error_code in ERROR_CODE_MSG:
+                error_text = "Error Message: {0}".format(error_message)
             else:
-                error_text = "Error Code: {0}. Error Message: {1}".format(error_code, error_msg)
+                error_text = "Error Code: {0}. Error Message: {1}".format(error_code, error_message)
         except:
-            self.debug_print(PARSE_ERR_MSG)
-            error_text = PARSE_ERR_MSG
+            self.debug_print(PARSE_ERROR_MSG)
+            error_text = PARSE_ERROR_MSG
 
         return error_text
 
@@ -141,7 +125,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
             error_text = "Cannot parse error details"
 
         message = "Status Code: {0}. Data from server:\n{1}\n".format(status_code,
-                unquote(self._handle_py_ver_compat_for_input_str(error_text)))
+                unquote(error_text))
 
         message = message.replace('{', '{{').replace('}', '}}')
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
@@ -152,8 +136,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
         try:
             resp_json = r.json()
         except Exception as e:
-            err = self._get_error_message_from_exception(e)
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(err)), None)
+            error = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(error)), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
@@ -164,7 +148,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
             message = "Error from server. Status Code: {0} Data from server: {1}".format(r.status_code, resp_json.get('detail'))
         else:
             message = "Error from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, self._handle_py_ver_compat_for_input_str(r.text.replace('{', '{{').replace('}', '}}')))
+                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -191,7 +175,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         # everything else is actually an error at this point
         message = "Can't process response from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, self._handle_py_ver_compat_for_input_str(r.text.replace('{', '{{').replace('}', '}}')))
+                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -227,8 +211,9 @@ class AkamaiNetworkListsConnector(BaseConnector):
             error_message = "Error Details: Connection Refused from the Server"
             return RetVal(action_result.set_status(phantom.APP_ERROR, error_message), resp_json)
         except Exception as e:
-            err = self._get_error_message_from_exception(e)
-            return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(err)), resp_json)
+            error_message = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status(
+                phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(error_message)), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -270,7 +255,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
         if param.get("extended"):
             params['extended'] = param.get("extended")
         if param.get("search"):
-            params['search'] = self._handle_py_ver_compat_for_input_str(param.get("search"))
+            params['search'] = param.get("search")
 
         endpoint = self._process_parameters(AKAMAI_NETWORK_LIST_ENDPOINT, params)
 
@@ -296,8 +281,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
         if param.get("extended"):
             params['extended'] = param.get("extended")
         if param.get("networklistid"):
-            param_networklistid = [x.strip() for x in self._handle_py_ver_compat_for_input_str(param.get("networklistid")).split(',')]
-            param_networklistid = list(filter(None, param_networklistid))
+            param_networklistid = [x.strip() for x in param.get("networklistid").split(',')]
+            param_networklistid = list([_f for _f in param_networklistid if _f])
             if not param_networklistid:
                 return action_result.set_status(phantom.APP_ERROR, "Please provide valid input value in the 'networklistid' action parameter")
 
@@ -324,19 +309,19 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        param_elements = [x.strip() for x in self._handle_py_ver_compat_for_input_str(param.get("elements")).split(',')]
-        param_elements = list(filter(None, param_elements))
+        param_elements = [x.strip() for x in param.get("elements").split(',')]
+        param_elements = list([_f for _f in param_elements if _f])
         if not param_elements:
             return action_result.set_status(phantom.APP_ERROR, "Please provide valid input value in the 'elements' action parameter")
 
         if len(param_elements) <= 1:
             # Create the param data to build the URI correctly. Only doing this to reuse code.
             # Can assign manually but it wont be as flexible if the API changes.
-            params = {'element': self._handle_py_ver_compat_for_input_str(param.get('elements'))}
+            params = {'element': param.get('elements')}
 
             endpoint = self._process_parameters(
                 "{}/{}/elements".format(AKAMAI_NETWORK_LIST_ENDPOINT,
-                self._handle_py_ver_compat_for_input_str(param.get('networklistid'))), params)
+                param.get('networklistid')), params)
 
             # make rest call
             ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="put")
@@ -347,7 +332,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
                 # Add element to the list
                 data['list'].append(element)
 
-            endpoint = "{}/{}/append".format(AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')))
+            endpoint = "{}/{}/append".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get('networklistid'))
 
             # make rest call
             ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="post", json=data)
@@ -365,19 +350,19 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        param_elements = [x.strip() for x in self._handle_py_ver_compat_for_input_str(param.get("elements")).split(',')]
-        param_elements = list(filter(None, param_elements))
+        param_elements = [x.strip() for x in param.get("elements").split(',')]
+        param_elements = list([_f for _f in param_elements if _f])
         if not param_elements:
             return action_result.set_status(phantom.APP_ERROR, "Please provide valid input value in the 'elements' action parameter")
 
         if len(param_elements) < 2:
             # Create the param data to build the URI correctly. Only doing this to reuse code.
             # Can assign manually but it wont be as flexible if the API changes.
-            params = {'element': self._handle_py_ver_compat_for_input_str(param.get('elements'))}
+            params = {'element': param.get('elements')}
 
             endpoint = self._process_parameters(
                 "{}/{}/elements".format(AKAMAI_NETWORK_LIST_ENDPOINT,
-                self._handle_py_ver_compat_for_input_str(param.get('networklistid'))), params)
+                param.get('networklistid')), params)
 
             # make rest call
             ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="delete")
@@ -387,15 +372,15 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
             # Need to get the list of items before we can remove them. We also need other data to be able to update the network list.
             # Format the URI
-            endpoint = "{}/{}".format(AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')))
+            endpoint = "{}/{}".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get('networklistid'))
 
             # make rest call
             ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None)
             try:
                 networkList = response['list']
             except Exception as e:
-                err = self._get_error_message_from_exception(e)
-                return action_result.set_status(phantom.APP_ERROR, "Error occurred while processing the response. {}".format(err))
+                error_message = self._get_error_message_from_exception(e)
+                return action_result.set_status(phantom.APP_ERROR, "Error occurred while processing the response. {}".format(error_message))
             # Loop through the parameters passed.
             for item in param_elements:
                 # Index is used to pop the item from the list
@@ -435,23 +420,23 @@ class AkamaiNetworkListsConnector(BaseConnector):
         # Access action parameters passed in the 'param' dictionary
         ip_data = []
 
-        ip_list = [x.strip() for x in self._handle_py_ver_compat_for_input_str(param.get("list")).split(',')]
-        ip_list = list(filter(None, ip_list))
+        ip_list = [x.strip() for x in param.get("list").split(',')]
+        ip_list = list([_f for _f in ip_list if _f])
         if not ip_list:
             return action_result.set_status(phantom.APP_ERROR, "Please provide valid input value in the 'list' action parameter")
 
         for ip in ip_list:
             ip_data.append(ip)
 
-        type = self._handle_py_ver_compat_for_input_str(param.get('type'))
+        type = param.get('type')
         if type not in TYPE_VALUE_LIST:
             return action_result.set_status(
                 phantom.APP_ERROR, "Please provide valid input from {} in 'type' action parameter".format(TYPE_VALUE_LIST))
 
         data = {
-            "name": self._handle_py_ver_compat_for_input_str(param.get('name')),
+            "name": param.get('name'),
             "type": type,
-            "description": self._handle_py_ver_compat_for_input_str(param.get('description')),
+            "description": param.get('description'),
             "list": ip_data
         }
 
@@ -473,11 +458,11 @@ class AkamaiNetworkListsConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         # Access action parameters passed in the 'param' dictionary
-        endpoint = "{}/{}/details".format(AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')))
+        endpoint = "{}/{}/details".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get('networklistid'))
 
         data = {
-            "name": self._handle_py_ver_compat_for_input_str(param.get('name')),
-            "description": self._handle_py_ver_compat_for_input_str(param.get('description'))
+            "name": param.get('name'),
+            "description": param.get('description')
         }
 
         # make rest call
@@ -498,7 +483,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         # Access action parameters passed in the 'param' dictionary
 
-        endpoint = "{}/{}".format(AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')))
+        endpoint = "{}/{}".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get('networklistid'))
 
         # make rest call
         ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="delete")
@@ -519,13 +504,13 @@ class AkamaiNetworkListsConnector(BaseConnector):
         # Access action parameters passed in the 'param' dictionary
 
         data = {
-            "comments": self._handle_py_ver_compat_for_input_str(param.get('comments', ''))
+            "comments": param.get('comments', '')
         }
 
         # Notification parameter is used
         if param.get("notification"):
-            notifications = [x.strip() for x in self._handle_py_ver_compat_for_input_str(param.get("notification")).split(',')]
-            notifications = list(filter(None, notifications))
+            notifications = [x.strip() for x in param.get("notification").split(',')]
+            notifications = list([_f for _f in notifications if _f])
             if not notifications:
                 return action_result.set_status(phantom.APP_ERROR, "Please provide valid input value in the 'notification' action parameter")
 
@@ -536,13 +521,13 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
             data['notification'] = notificationEmails
 
-        environment = self._handle_py_ver_compat_for_input_str(param.get('environment'))
+        environment = param.get('environment')
         if environment not in ENVIRONMENT_VALUE_LIST:
             return action_result.set_status(
                 phantom.APP_ERROR, "Please provide valid input from {} in 'environment' action parameter".format(ENVIRONMENT_VALUE_LIST))
 
         endpoint = "{}/{}/environments/{}/activate".format(
-            AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')), environment)
+            AKAMAI_NETWORK_LIST_ENDPOINT, param.get('networklistid'), environment)
 
         # make rest call
         ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="post", json=data)
@@ -560,13 +545,13 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        environment = self._handle_py_ver_compat_for_input_str(param.get('environment'))
+        environment = param.get('environment')
         if environment not in ENVIRONMENT_VALUE_LIST:
             return action_result.set_status(
                 phantom.APP_ERROR, "Please provide valid input from {} in 'environment' action parameter".format(ENVIRONMENT_VALUE_LIST))
 
         endpoint = "{}/{}/environments/{}/status".format(
-            AKAMAI_NETWORK_LIST_ENDPOINT, self._handle_py_ver_compat_for_input_str(param.get('networklistid')), environment)
+            AKAMAI_NETWORK_LIST_ENDPOINT, param.get('networklistid'), environment)
 
         # make rest call
         ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None)
@@ -591,7 +576,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
             return action_result.get_status()
 
         endpoint = self._process_parameters("{}/{}/sync-points/{}/history".format(AKAMAI_NETWORK_LIST_ENDPOINT,
-            self._handle_py_ver_compat_for_input_str(param.get('networklistid')), syncpoint), params)
+            param.get('networklistid'), syncpoint), params)
 
         # make rest call
         ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None)
@@ -678,7 +663,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
         action = self.get_action_identifier()
         action_execution_status = phantom.APP_SUCCESS
 
-        if action in action_mapping.keys():
+        if action in list(action_mapping.keys()):
             action_function = action_mapping[action]
             action_execution_status = action_function(param)
         return action_execution_status
@@ -695,7 +680,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
         if len(params) > 0:
             endpoint = "{}{}".format(endpoint, "?")
 
-            for param, value in params.items():
+            for param, value in list(params.items()):
                 if first_param:
                     endpoint = "{}{}={}".format(endpoint, param, value)
                     first_param = False
@@ -715,13 +700,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
         # get the asset config
         config = self.get_config()
 
-        # Fetching the Python major version
-        try:
-            self._python_version = int(sys.version_info[0])
-        except:
-            return self.set_status(phantom.APP_ERROR, "Error occurred while fetching the Phantom server's Python major version")
-
-        self._base_url = self._handle_py_ver_compat_for_input_str(config.get('base_url').strip("/"))
+        self._base_url = config.get('base_url').strip("/")
         self._client_token = config.get('client_token')
         self._client_secret = config.get('client_secret')
         self._access_token = config.get('access_token')
