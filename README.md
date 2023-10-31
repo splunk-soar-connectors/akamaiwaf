@@ -2,11 +2,11 @@
 # Akamai WAF
 
 Publisher: Robert Drouin  
-Connector Version: 1.1.0  
+Connector Version: 2.0.0  
 Product Vendor: Akamai  
 Product Name: Network Lists  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 5.2.0  
+Minimum Product Version: 6.0.2  
 
 The WAF API allows you to manage a common set of lists for use in various Akamai security products such as Kona Site Defender, Web App Protector, and Bot Manager
 
@@ -91,7 +91,7 @@ action_result.parameter.includeelements | boolean |  |   True  False
 action_result.data.\*.networkLists.\*.name | string |  |  
 action_result.data.\*.networkLists.\*.networkListType | string |  |  
 action_result.data.\*.networkLists.\*.elementCount | numeric |  |  
-action_result.data.\*.networkLists.\*.list | string |  `ip`  `ipv6`  |  
+action_result.data.\*.networkLists.\*.list | string |  `ip`  |  
 action_result.data.\*.networkLists.\*.uniqueId | string |  `akamai networklist id`  |  
 action_result.data.\*.networkLists.\*.type | string |  |  
 action_result.data.\*.networkLists.\*.description | string |  |  
@@ -129,7 +129,7 @@ action_result.parameter.includeelements | boolean |  |   True  False
 action_result.data.\*.name | string |  |  
 action_result.data.\*.networkListType | string |  |  
 action_result.data.\*.elementCount | numeric |  |  
-action_result.data.\*.list | string |  `ip`  `ipv6`  |  
+action_result.data.\*.list | string |  `ip`  |  
 action_result.data.\*.uniqueId | string |  `akamai networklist id`  |  
 action_result.data.\*.type | string |  |  
 action_result.data.\*.description | string |  |  
@@ -155,7 +155,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **name** |  required  | Name for the new network list | string | 
 **type** |  required  | Type of the new network list | string | 
 **description** |  required  | Description of the new network list | string | 
-**list** |  required  | IP(s) for the new network list. Comma-separated list is allowed | string |  `ip`  `ipv6` 
+**list** |  required  | IP(s) for the new network list. Comma-separated list is allowed | string |  `ip` 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
@@ -163,11 +163,11 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 action_result.parameter.name | string |  |  
 action_result.parameter.type | string |  |  
 action_result.parameter.description | string |  |  
-action_result.parameter.list | string |  `ip`  `ipv6`  |  
+action_result.parameter.list | string |  `ip`  |  
 action_result.data.\*.name | string |  |  
 action_result.data.\*.networkListType | string |  |  
 action_result.data.\*.elementCount | numeric |  |  
-action_result.data.\*.list | string |  `ip`  `ipv6`  |  
+action_result.data.\*.list | string |  `ip`  |  
 action_result.data.\*.uniqueId | string |  `akamai networklist id`  |  
 action_result.data.\*.type | string |  |  
 action_result.status | string |  |   success  failed 
@@ -226,7 +226,7 @@ action_result.parameter.description | string |  |
 action_result.data.\*.name | string |  |  
 action_result.data.\*.networkListType | string |  |  
 action_result.data.\*.elementCount | numeric |  |  
-action_result.data.\*.list | string |  `ip`  `ipv6`  |  
+action_result.data.\*.list | string |  `ip`  |  
 action_result.data.\*.uniqueId | string |  `akamai networklist id`  |  
 action_result.data.\*.type | string |  |  
 action_result.status | string |  |   success  failed 
@@ -247,17 +247,17 @@ If the network list's type is IP, the value needs to be a URL-encoded IP address
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **networklistid** |  required  | Unique identifier for the network list | string |  `akamai networklist id` 
-**elements** |  required  | Element(s) to add to the network list. Comma-separated list is allowed | string |  `ip`  `ipv6` 
+**elements** |  required  | Element(s) to add to the network list. Comma-separated list is allowed | string |  `ip` 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.networklistid | string |  `akamai networklist id`  |  
-action_result.parameter.elements | string |  `ip`  `ipv6`  |  
+action_result.parameter.elements | string |  `ip`  |  
 action_result.data.\*.name | string |  |  
 action_result.data.\*.networkListType | string |  |  
 action_result.data.\*.elementCount | numeric |  |  
-action_result.data.\*.list | string |  `ip`  `ipv6`  |  
+action_result.data.\*.list | string |  `ip`  |  
 action_result.data.\*.uniqueId | string |  `akamai networklist id`  |  
 action_result.data.\*.type | string |  |  
 action_result.data.\*.description | string |  |  
@@ -279,17 +279,17 @@ If the network list's type is IP, the value needs to be a URL-encoded IP address
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **networklistid** |  required  | Unique identifier for the network list | string |  `akamai networklist id` 
-**elements** |  required  | Element(s) to be removed from the network list. Comma-separated list is allowed | string |  `ip`  `ipv6` 
+**elements** |  required  | Element(s) to be removed from the network list. Comma-separated list is allowed | string |  `ip` 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.networklistid | string |  `akamai networklist id`  |  
-action_result.parameter.elements | string |  `ip`  `ipv6`  |  
+action_result.parameter.elements | string |  `ip`  |  
 action_result.data.\*.name | string |  |  
 action_result.data.\*.networkListType | string |  |  
 action_result.data.\*.elementCount | numeric |  |  
-action_result.data.\*.list | string |  `ip`  `ipv6`  |  
+action_result.data.\*.list | string |  `ip`  |  
 action_result.data.\*.uniqueId | string |  `akamai networklist id`  |  
 action_result.data.\*.type | string |  |  
 action_result.data.\*.description | string |  |  
@@ -387,7 +387,7 @@ action_result.parameter.extended | boolean |  |   True  False
 action_result.data.\*.name | string |  |  
 action_result.data.\*.networkListType | string |  |  
 action_result.data.\*.elementCount | numeric |  |  
-action_result.data.\*.list | string |  `ip`  `ipv6`  |  
+action_result.data.\*.list | string |  `ip`  |  
 action_result.data.\*.uniqueId | string |  `akamai networklist id`  |  
 action_result.data.\*.type | string |  |  
 action_result.data.\*.syncPoint | numeric |  `akamai networklist syncpoint`  |  
