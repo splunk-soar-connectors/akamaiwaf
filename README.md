@@ -2,7 +2,7 @@
 # Akamai WAF
 
 Publisher: Robert Drouin  
-Connector Version: 2.0.0  
+Connector Version: 2.1.0  
 Product Vendor: Akamai  
 Product Name: Network Lists  
 Product Version Supported (regex): ".\*"  
