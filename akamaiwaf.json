@@ -15,7 +15,7 @@
         }
     ],
     "license": "Copyright (c) Robert Drouin, 2021-2023",
-    "app_version": "2.0.0",
+    "app_version": "2.1.0",
     "fips_complaint": false,
     "utctime_updated": "2022-01-07T21:55:37.000000Z",
     "package_name": "phantom_akamainetworklists",
@@ -129,7 +129,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {
@@ -293,7 +293,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {
@@ -416,7 +416,7 @@
                     "order": 3,
                     "allow_list": true,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ],
                     "primary": true
                 }
@@ -438,7 +438,7 @@
                     "data_path": "action_result.parameter.list",
                     "data_type": "string",
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {
@@ -465,7 +465,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {
@@ -681,7 +681,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {
@@ -762,7 +762,7 @@
                     "order": 1,
                     "allow_list": true,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ],
                     "primary": true
                 }
@@ -779,7 +779,7 @@
                     "data_path": "action_result.parameter.elements",
                     "data_type": "string",
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {
@@ -806,7 +806,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {
@@ -893,7 +893,7 @@
                     "order": 1,
                     "allow_list": true,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ],
                     "primary": true
                 }
@@ -910,7 +910,7 @@
                     "data_path": "action_result.parameter.elements",
                     "data_type": "string",
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {
@@ -937,7 +937,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {
@@ -1367,7 +1367,7 @@
                     "column_name": "List",
                     "column_order": 4,
                     "contains": [
-                        "ip", "ipv6"
+                        "ip"
                     ]
                 },
                 {

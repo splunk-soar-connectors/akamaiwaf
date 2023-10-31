@@ -7,6 +7,7 @@
 # Phantom App imports
 import json
 import sys
+import ipaddress
 
 import phantom.app as phantom
 import requests
@@ -691,11 +692,27 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         return endpoint
 
+    def _validate_ip(self, input_ip_address):
+        """
+        Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+
+        :param input_ip_address: IP address
+        :return: status (success/failure)
+        """
+        try:
+            ipaddress.ip_address(input_ip_address)
+        except Exception:
+            return False
+        return True
+
     def initialize(self):
 
         # Load the state in initialize, use it to store data
         # that needs to be accessed across actions
         self._state = self.load_state()
+
+        # set validator for ip
+        self.set_validator('ip', self._validate_ip)
 
         # get the asset config
         config = self.get_config()
