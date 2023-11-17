@@ -1,2 +1,2 @@
 **Unreleased**
-* Added IPV6 support for several actions
+* Added IPv6 support for several actions
