@@ -119,7 +119,7 @@ class EGSimpleTest(unittest.TestCase):
     def test_defaults(self):
         auth = EdgeGridAuth(
             client_token="xxx",
-            client_secret="xxx",
+            client_secret="xxx",  # pragma: allowlist secret
             access_token="xxx",  # pragma: allowlist secret
         )
         self.assertEqual(auth.max_body, 131072)
