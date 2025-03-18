@@ -33,15 +33,16 @@ usage:
 from .edgegrid import EdgeGridAuth
 from .edgerc import EdgeRc
 
-__all__ = ['EdgeGridAuth', 'EdgeRc']
 
-__title__ = 'edgegrid-python'
-__version__ = '1.1'
-__author__ = 'Jonathan Landis <jlandis@akamai.com>'
-__license__ = 'Apache 2.0'
-__copyright__ = 'Copyright 2014 Akamai Technologies'
+__all__ = ["EdgeGridAuth", "EdgeRc"]
 
-# Copyright 2014 Akamai Technologies, Inc. All Rights Reserved
+__title__ = "edgegrid-python"
+__version__ = "1.1"
+__author__ = "Jonathan Landis <jlandis@akamai.com>"
+__license__ = "Apache 2.0"
+__copyright__ = "Copyright 2014 Akamai Technologies"
+
+# Copyright 2014-2025 Akamai Technologies, Inc. All Rights Reserved
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
