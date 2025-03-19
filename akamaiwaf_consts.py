@@ -1,13 +1,13 @@
 # File: akamaiwaf_consts.py
 #
-# Copyright (c) Robert Drouin, 2021-2023
+# Copyright (c) Robert Drouin, 2021-2025
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 # Define your constants here
-AKAMAI_API_PATH = '/network-list/v2/'
-AKAMAI_NETWORK_LIST_ENDPOINT = 'network-lists'
-AKAMAI_ACTIVATIONS_ENDPOINT = 'activations'
+AKAMAI_API_PATH = "/network-list/v2/"
+AKAMAI_NETWORK_LIST_ENDPOINT = "network-lists"
+AKAMAI_ACTIVATIONS_ENDPOINT = "activations"
 
 DEFAULT_TIMEOUT = 30
 
