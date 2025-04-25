@@ -15,9 +15,9 @@
         }
     ],
     "license": "Copyright (c) Robert Drouin, 2021-2025",
-    "app_version": "2.1.1",
+    "app_version": "2.1.2",
     "fips_complaint": false,
-    "utctime_updated": "2025-03-24T22:25:23.191159Z",
+    "utctime_updated": "2025-04-25T19:41:24.055454Z",
     "package_name": "phantom_akamainetworklists",
     "python_version": "3",
     "main_module": "akamaiwaf_connector.py",

@@ -1,7 +1,7 @@
 # Akamai WAF
 
 Publisher: Robert Drouin \
-Connector Version: 2.1.1 \
+Connector Version: 2.1.2 \
 Product Vendor: Akamai \
 Product Name: Network Lists \
 Minimum Product Version: 6.0.2
