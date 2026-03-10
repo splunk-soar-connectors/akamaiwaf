@@ -63,6 +63,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
         :param e: Exception object
         :return: error message
         """
+        error_code = None
+        error_message = None
 
         try:
             if e.args:
