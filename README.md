@@ -33,6 +33,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **access_token** | required | password | Access Token for the API |
 **client_token** | required | password | Client Token for the API |
 **client_secret** | required | password | Client Secret for the API |
+**akamai_verify_ssl** | optional | boolean | Verify SSL certificates |
 
 ### Supported Actions
 
