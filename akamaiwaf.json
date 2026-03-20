@@ -15,11 +15,11 @@
         }
     ],
     "license": "Copyright (c) Robert Drouin, 2021-2025",
-    "app_version": "3.0.0",
+    "app_version": "2.1.4",
     "fips_complaint": false,
     "utctime_updated": "2026-03-10T11:58:48.158Z",
     "package_name": "phantom_akamainetworklists",
-    "python_version": "3.13",
+    "python_version": "3.9, 3.13",
     "main_module": "akamaiwaf_connector.py",
     "min_phantom_version": "7.1.0",
     "configuration": {
@@ -46,6 +46,12 @@
             "data_type": "password",
             "required": true,
             "order": 3
+        },
+        "akamai_verify_ssl": {
+            "description": "Verify SSL certificates",
+            "data_type": "boolean",
+            "default": true,
+            "order": 4
         }
     },
     "actions": [
@@ -1617,6 +1623,11 @@
             "versions": "EQ(*)"
         }
     ],
+    "pip39_dependencies": {
+        "pypi": [
+            {"module":  "edgegrid-python"}
+        ]
+    },
     "pip313_dependencies": {
         "pypi": [
             {"module":  "edgegrid-python"}

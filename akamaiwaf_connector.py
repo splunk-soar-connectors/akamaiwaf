@@ -179,6 +179,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
     def _make_rest_call(self, endpoint, action_result, method="get", **kwargs):
         # **kwargs can be any additional parameters that requests.request accepts
+        config = self.get_config()
 
         resp_json = None
 
@@ -194,7 +195,12 @@ class AkamaiNetworkListsConnector(BaseConnector):
             r = requests.Session()
             r.auth = EdgeGridAuth(client_token=self._client_token, client_secret=self._client_secret, access_token=self._access_token)
             print(vars(r))
-            r = request_func(url, auth=r.auth, **kwargs)
+            r = request_func(
+                url,
+                auth=r.auth,
+                verify=config.get("akamai_verify_ssl", False),
+                **kwargs
+            )
         except requests.exceptions.InvalidSchema:
             error_message = f"Error connecting to server. No connection adapters were found for {url}"
             return RetVal(action_result.set_status(phantom.APP_ERROR, error_message), resp_json)
@@ -698,10 +704,10 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
 
 if __name__ == "__main__":
-    # import pudb
+    import pudb
     import argparse
 
-    # pudb.set_trace()
+    pudb.set_trace()
 
     argparser = argparse.ArgumentParser()
 
