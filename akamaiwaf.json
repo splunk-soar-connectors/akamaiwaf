@@ -14,7 +14,7 @@
             "name": "Nikhilesh Chaudhari"
         }
     ],
-    "license": "Copyright (c) Robert Drouin, 2021-2025",
+    "license": "Copyright (c) Robert Drouin, 2021-2026",
     "app_version": "2.1.4",
     "fips_complaint": false,
     "utctime_updated": "2026-03-10T11:58:48.158Z",
@@ -1625,12 +1625,16 @@
     ],
     "pip39_dependencies": {
         "pypi": [
-            {"module":  "edgegrid-python"}
+            {
+                "module": "edgegrid-python"
+            }
         ]
     },
     "pip313_dependencies": {
         "pypi": [
-            {"module":  "edgegrid-python"}
+            {
+                "module": "edgegrid-python"
+            }
         ]
     }
 }
