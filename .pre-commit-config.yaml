@@ -10,7 +10,7 @@ repos:
         stages: [commit-msg]
         args: [--verbose]
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v6.0.0
     hooks:
       - id: check-merge-conflict
       - id: end-of-file-fixer
