@@ -1624,19 +1624,19 @@
         }
     ],
     "pip39_dependencies": {
-        "pypi": [
-            {
-                "module": "edgegrid-python"
-            }
-        ],
-        "wheel": []
+        "wheel": [
+	    {
+		"module": "edgegrid-python",
+		"input_file": "wheels/py3/edgegrid_python-2.0.5-py3-none-any.whl"
+	    }
+	]
     },
     "pip313_dependencies": {
-        "pypi": [
-            {
-                "module": "edgegrid-python"
-            }
-        ],
-        "wheel": []
+        "wheel": [
+	    {
+		"module": "edgegrid-python",
+		"input_file": "wheels/py3/edgegrid_python-2.0.5-py3-none-any.whl"
+	    }
+	]
     }
 }
