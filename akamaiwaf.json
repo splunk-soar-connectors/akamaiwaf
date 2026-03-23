@@ -1628,13 +1628,15 @@
             {
                 "module": "edgegrid-python"
             }
-        ]
+        ],
+        "wheels": []
     },
     "pip313_dependencies": {
         "pypi": [
             {
                 "module": "edgegrid-python"
             }
-        ]
+        ],
+        "wheels": []
     }
 }
