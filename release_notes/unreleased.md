@@ -1,1 +1,3 @@
 **Unreleased**
+* Released app with Python 3.13 support
+* Adds optional ssl verify configuration
