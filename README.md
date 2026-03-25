@@ -1,7 +1,7 @@
 # Akamai WAF
 
 Publisher: Robert Drouin <br>
-Connector Version: 2.1.4 <br>
+Connector Version: 2.1.5 <br>
 Product Vendor: Akamai <br>
 Product Name: Network Lists <br>
 Minimum Product Version: 7.1.0
@@ -49,7 +49,11 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [activation status](#action-activation-status) - Shows a network list activation status on either the STAGING or PRODUCTION environment <br>
 [activation snapshot](#action-activation-snapshot) - Gets a version of a network list <br>
 [activation details](#action-activation-details) - Provides detailed status for a given activation <br>
-[list siteshields](#action-list-siteshields) - Get akamai site shields ip ranges
+[list siteshields](#action-list-siteshields) - Get akamai site shields ip ranges <br>
+[get client list](#action-get-client-list) - Get a client list <br>
+[activate client list](#action-activate-client-list) - Activate a client list <br>
+[add client list element](#action-add-client-list-element) - Add a client list element <br>
+[remove client list element](#action-remove-client-list-element) - Remove a client list element
 
 ## action: 'test connectivity'
 
@@ -482,6 +486,198 @@ action_result.message | string | | |
 action_result.summary.num_data | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+
+## action: 'get client list'
+
+Get a client list
+
+Type: **investigate** <br>
+Read only: **True**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**listId** | required | Unique identifier for each client list. Comma-separated list is allowed | string | `akamai clientlist id` |
+**includeNetworkList** | optional | When enabled, inclues network list in the response (Default: false) | boolean | |
+**includeItems** | optional | If enabled, the response list includes all items (Default: false) | boolean | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.listId | string | `akamai clientlist id` | |
+action_result.parameter.includeNetworkList | boolean | | True False |
+action_result.parameter.includeItems | boolean | | True False |
+action_result.data.\*.name | string | | |
+action_result.data.\*.listType | string | | CL NL |
+action_result.data.\*.itemsCount | numeric | | |
+action_result.data.\*.listId | string | | |
+action_result.data.\*.type | string | | IP GEO ASN TLS_FINGERPRINT FILE_HASH USER_ID DOMAIN |
+action_result.data.\*.notes | string | | |
+action_result.data.\*.createDate | string | | |
+action_result.data.\*.createdBy | string | | |
+action_result.data.\*.updateDate | string | | |
+action_result.data.\*.updatedBy | string | | |
+action_result.data.\*.contractId | string | | |
+action_result.data.\*.deprecated | boolean | | |
+action_result.data.\*.groupId | numeric | | |
+action_result.data.\*.groupName | string | | |
+action_result.data.\*.productionActivationStatus | string | | |
+action_result.data.\*.productionActiveVersion | numeric | | |
+action_result.data.\*.readOnly | boolean | | |
+action_result.data.\*.shared | boolean | | |
+action_result.data.\*.stagingActivationStatus | string | | |
+action_result.data.\*.stagingActiveVersion | numeric | | |
+action_result.data.\*.tags | string | | |
+action_result.data.\*.version | numeric | | |
+action_result.data.\*.items.\*.createDate | string | | |
+action_result.data.\*.items.\*.createdBy | string | | |
+action_result.data.\*.items.\*.description | string | | |
+action_result.data.\*.items.\*.createDate | string | | |
+action_result.data.\*.items.\*.description | string | | |
+action_result.data.\*.items.\*.expirationDate | string | | |
+action_result.data.\*.items.\*.listId | numeric | | |
+action_result.data.\*.items.\*.productionStatus | string | | INACTIVE PENDING_ACTIVATION ACTIVE MODIFIED PENDING_DEACTIVATION FAILED |
+action_result.data.\*.items.\*.stagingStatus | string | | INACTIVE PENDING_ACTIVATION ACTIVE MODIFIED PENDING_DEACTIVATION FAILED |
+action_result.data.\*.items.\*.tags | string | | |
+action_result.data.\*.items.\*.type | string | | IP GEO ASN TLS_FINGERPRINT FILE_HASH USER_ID DOMAIN |
+action_result.data.\*.items.\*.updateDate | string | | |
+action_result.data.\*.items.\*.updatedBy | string | | |
+action_result.data.\*.items.\*.value | string | | |
+summary.total_objects_successful | numeric | | |
+action_result.message | string | | |
+action_result.status | string | | |
+summary.total_objects | numeric | | |
+
+## action: 'activate client list'
+
+Activate a client list
+
+Type: **generic** <br>
+Read only: **False**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**listId** | required | Unique identifier for each client list. Comma-separated list is allowed | string | `akamai clientlist id` |
+**action** | required | Actions you can take for a client list: either ACTIVATE OR DEACTIVATE | string | |
+**network** | required | The network environment where you activate your client list: either STAGING or PRODUCTION. | string | |
+**comments** | optional | A brief description for the activation | string | |
+**notificationRecipients** | optional | Users to notify via email. | string | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.listId | string | `akamai clientlist id` | |
+action_result.parameter.action | string | | ACTIVATE DEACTIVATE |
+action_result.parameter.network | string | | STAGING PRODUCTION |
+action_result.parameter.comments | string | | |
+action_result.parameter.notificationRecipients | string | `email` | |
+action_result.data.\*.activationId | numeric | | |
+action_result.data.\*.action | string | | ACTIVATE DEACTIVATE |
+action_result.data.\*.activationStatus | string | | INACTIVE PENDING_ACTIVATION ACTIVE MODIFIED PENDING_DEACTIVATION FAILED |
+action_result.data.\*.comments | string | | |
+action_result.data.\*.network | string | | STAGING PRODUCTION |
+action_result.data.\*.createDate | string | | |
+action_result.data.\*.createdBy | string | | |
+action_result.data.\*.updateDate | string | | |
+action_result.data.\*.updatedBy | string | | |
+action_result.data.\*.listId | string | | |
+action_result.data.\*.notificationRecipeints | string | | |
+action_result.data.\*.version | numeric | | |
+summary.total_objects_successful | numeric | | |
+action_result.message | string | | |
+action_result.status | string | | |
+summary.total_objects | numeric | | |
+
+## action: 'add client list element'
+
+Add a client list element
+
+Type: **generic** <br>
+Read only: **False**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**listId** | required | Unique identifier for each client list. | string | `akamai clientlist id` |
+**elements** | optional | Value of the entry, which is either an IP address, an Autonomous System Number (ASN), a geographic location, a TLS fingerprint, a file hash, a username/user ID, or a domain name. Comma-separated list is allowed | string | |
+**description** | optional | Any additional description of the client list entry | string | |
+**expirationDate** | optional | ISO 8601 timestamp indicating when the entry expires. | string | |
+**tags** | optional | Any defined tags for a specified client list. Comma-separated list is allowed | string | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.listId | string | `akamai clientlist id` | |
+action_result.parameter.elements | string | | |
+action_result.parameter.description | string | | |
+action_result.parameter.expirationDate | string | | |
+action_result.parameter.tags | string | | |
+action_result.data.\*.appended.\*.value | string | | |
+action_result.data.\*.appended.\*.description | string | | |
+action_result.data.\*.appended.\*.createDate | string | | |
+action_result.data.\*.appended.\*.createdBy | string | | |
+action_result.data.\*.appended.\*.expirationDate | string | | |
+action_result.data.\*.appended.\*.stagingStatus | string | | INACTIVE PENDING_ACTIVATION ACTIVE MODIFIED PENDING_DEACTIVATION FAILED |
+action_result.data.\*.appended.\*.productionStatus | string | | INACTIVE PENDING_ACTIVATION ACTIVE MODIFIED PENDING_DEACTIVATION FAILED |
+action_result.data.\*.appended.\*.listId | string | | |
+action_result.data.\*.appended.\*.updateDate | string | | |
+action_result.data.\*.appended.\*.updatedBy | string | | |
+action_result.data.\*.appended.\*.tags | string | | |
+action_result.data.\*.appended.\*.type | string | | IP GEO ASN TLS_FINGERPRINT FILE_HASH USER_ID DOMAIN |
+summary.total_objects_successful | numeric | | |
+action_result.message | string | | |
+action_result.status | string | | |
+summary.total_objects | numeric | | |
+
+## action: 'remove client list element'
+
+Remove a client list element
+
+Type: **generic** <br>
+Read only: **False**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**listId** | required | Unique identifier for each client list. | string | `akamai clientlist id` |
+**elements** | optional | Value of the entry, which is either an IP address, an Autonomous System Number (ASN), a geographic location, a TLS fingerprint, a file hash, a username/user ID, or a domain name. Comma-separated list is allowed | string | |
+**description** | optional | Any additional description of the client list entry | string | |
+**expirationDate** | optional | ISO 8601 timestamp indicating when the entry expires. | string | |
+**tags** | optional | Any defined tags for a specified client list. Comma-separated list is allowed | string | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.listId | string | `akamai clientlist id` | |
+action_result.parameter.elements | string | | |
+action_result.parameter.description | string | | |
+action_result.parameter.expirationDate | string | | |
+action_result.parameter.tags | string | | |
+action_result.data.\*.deleted.\*.value | string | | |
+action_result.data.\*.deleted.\*.description | string | | |
+action_result.data.\*.deleted.\*.createDate | string | | |
+action_result.data.\*.deleted.\*.createdBy | string | | |
+action_result.data.\*.deleted.\*.expirationDate | string | | |
+action_result.data.\*.deleted.\*.stagingStatus | string | | INACTIVE PENDING_ACTIVATION ACTIVE MODIFIED PENDING_DEACTIVATION FAILED |
+action_result.data.\*.deleted.\*.productionStatus | string | | INACTIVE PENDING_ACTIVATION ACTIVE MODIFIED PENDING_DEACTIVATION FAILED |
+action_result.data.\*.deleted.\*.listId | string | | |
+action_result.data.\*.deleted.\*.updateDate | string | | |
+action_result.data.\*.deleted.\*.updatedBy | string | | |
+action_result.data.\*.deleted.\*.tags | string | | |
+action_result.data.\*.deleted.\*.type | string | | IP GEO ASN TLS_FINGERPRINT FILE_HASH USER_ID DOMAIN |
+summary.total_objects_successful | numeric | | |
+action_result.message | string | | |
+action_result.status | string | | |
+summary.total_objects | numeric | | |
 
 ______________________________________________________________________
 

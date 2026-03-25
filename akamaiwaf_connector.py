@@ -629,8 +629,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
             param_clientlistid = [x.strip() for x in param.get("listId").split(",")]
             param_clientlistid = list([_f for _f in param_clientlistid if _f])
             if not param_clientlistid:
-                return action_result.set_status(phantom.APP_ERROR,
-                                                "Please provide valid input value in the 'networklistid' action parameter")
+                return action_result.set_status(phantom.APP_ERROR, "Please provide valid input value in the 'networklistid' action parameter")
 
         # Loop through each Network ID to retrive the data.
         for clientlist in param_clientlistid:
@@ -654,19 +653,14 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         # Access action parameters passed in the 'param' dictionary
 
-        data = {
-            "comments": param.get("comments", ""),
-            "action": param.get("action", "ACTIVATE")
-        }
-
+        data = {"comments": param.get("comments", ""), "action": param.get("action", "ACTIVATE")}
 
         # Notification parameter is used
         if param.get("notificationRecipients"):
             notifications = [x.strip() for x in param.get("notificationRecipients").split(",")]
             notifications = list([_f for _f in notifications if _f])
             if not notifications:
-                return action_result.set_status(phantom.APP_ERROR,
-                                                "Please provide valid input value in the 'notification' action parameter")
+                return action_result.set_status(phantom.APP_ERROR, "Please provide valid input value in the 'notification' action parameter")
 
             notificationEmails = []
 
@@ -678,16 +672,14 @@ class AkamaiNetworkListsConnector(BaseConnector):
         environment = param.get("network")
         if environment not in ENVIRONMENT_VALUE_LIST:
             return action_result.set_status(
-                phantom.APP_ERROR,
-                f"Please provide valid input from {ENVIRONMENT_VALUE_LIST} in 'environment' action parameter"
+                phantom.APP_ERROR, f"Please provide valid input from {ENVIRONMENT_VALUE_LIST} in 'environment' action parameter"
             )
         data["network"] = environment
 
         endpoint = AKAMAI_CLIENT_LIST_ACTIVATION_ENDPOINT.format(param.get("listId"))
 
         # make rest call
-        ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="post",
-                                                 json=data)
+        ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None, method="post", json=data)
 
         if phantom.is_fail(ret_val):
             return action_result.get_status()
@@ -704,8 +696,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
             data["delete"] = entries
         else:
             return action_result.set_status(
-                phantom.APP_ERROR,
-                f"Please provide valid input for client list entries action, either 'append' or 'delete'"
+                phantom.APP_ERROR, f"Please provide valid input for client list entries action, either 'append' or 'delete'"
             )
 
         endpoint = AKAMAI_CLIENT_LIST_ENTRIES_ENDPOINT.format(list_id)
@@ -792,7 +783,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
             "get_client_list": self._handle_get_client_list,
             "activate_client_list": self._handle_activate_client_list,
             "add_client_list_element": self._handle_add_client_list_element,
-            "remove_client_list_element": self._handle_remove_client_list_element
+            "remove_client_list_element": self._handle_remove_client_list_element,
         }
 
         action = self.get_action_identifier()

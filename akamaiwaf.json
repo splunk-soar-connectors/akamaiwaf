@@ -1728,25 +1728,25 @@
                     "data_path": "action_result.data.*.createDate",
                     "data_type": "string",
                     "column_name": "Created Date",
-                    "column_order": 8
+                    "column_order": 7
                 },
                 {
                     "data_path": "action_result.data.*.createdBy",
                     "data_type": "string",
                     "column_name": "Created By",
-                    "column_order": 9
+                    "column_order": 8
                 },
                 {
                     "data_path": "action_result.data.*.updateDate",
                     "data_type": "string",
                     "column_name": "Updated Date",
-                    "column_order": 10
+                    "column_order": 9
                 },
                 {
                     "data_path": "action_result.data.*.updatedBy",
                     "data_type": "string",
                     "column_name": "Updated By",
-                    "column_order": 11
+                    "column_order": 10
                 },
                 {
                     "data_path": "action_result.data.*.contractId",
@@ -1876,6 +1876,24 @@
                 {
                     "data_path": "action_result.data.*.items.*.value",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+		    "column_name": "Status",
+		    "column_order": 0
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
                 }
             ],
             "render": {
@@ -1965,7 +1983,9 @@
                 {
                     "data_path": "action_result.parameter.notificationRecipients",
                     "data_type": "string",
-                    "contains": ["email"]
+                    "contains": [
+                        "email"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.activationId",
@@ -1989,12 +2009,12 @@
                     "column_name": "Activation Status",
                     "column_order": 3,
                     "example_values": [
-                      "INACTIVE",
-                      "PENDING_ACTIVATION",
-                      "ACTIVE",
-                      "MODIFIED",
-                      "PENDING_DEACTIVATION",
-                      "FAILED"
+                        "INACTIVE",
+                        "PENDING_ACTIVATION",
+                        "ACTIVE",
+                        "MODIFIED",
+                        "PENDING_DEACTIVATION",
+                        "FAILED"
                     ]
                 },
                 {
@@ -2009,8 +2029,8 @@
                     "column_order": 5,
                     "column_name": "Network",
                     "example_values": [
-                      "STAGING",
-                      "PRODUCTION"
+                        "STAGING",
+                        "PRODUCTION"
                     ]
                 },
                 {
@@ -2039,6 +2059,24 @@
                 },
                 {
                     "data_path": "action_result.data.*.version",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+		    "column_name": "Status",
+		    "column_order": 0
+                },
+                {
+                    "data_path": "summary.total_objects",
                     "data_type": "numeric"
                 }
             ],
@@ -2196,6 +2234,24 @@
                         "USER_ID",
                         "DOMAIN"
                     ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+		    "column_name": "Status",
+		    "column_order": 0
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
                 }
             ],
             "render": {
@@ -2352,6 +2408,24 @@
                         "USER_ID",
                         "DOMAIN"
                     ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+		    "column_name": "Status",
+		    "column_order": 0
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
                 }
             ],
             "render": {
