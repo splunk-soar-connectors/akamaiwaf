@@ -1888,8 +1888,8 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-		            "column_name": "Status",
-		            "column_order": 0
+                    "column_name": "Status",
+                    "column_order": 0
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -2072,8 +2072,8 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-		            "column_name": "Status",
-		            "column_order": 0
+                    "column_name": "Status",
+                    "column_order": 0
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -2246,8 +2246,8 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-		            "column_name": "Status",
-		            "column_order": 0
+                    "column_name": "Status",
+                    "column_order": 0
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -2420,8 +2420,8 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-		            "column_name": "Status",
-		            "column_order": 0
+                    "column_name": "Status",
+                    "column_order": 0
                 },
                 {
                     "data_path": "summary.total_objects",
