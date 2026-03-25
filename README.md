@@ -4,7 +4,7 @@ Publisher: Robert Drouin <br>
 Connector Version: 2.1.4 <br>
 Product Vendor: Akamai <br>
 Product Name: Network Lists <br>
-Minimum Product Version: 7.1.0
+Minimum Product Version: 6.3.0
 
 The WAF API allows you to manage a common set of lists for use in various Akamai security products such as Kona Site Defender, Web App Protector, and Bot Manager
 
