@@ -15,11 +15,11 @@
         }
     ],
     "license": "Copyright (c) Robert Drouin, 2021-2026",
-    "app_version": "2.1.4",
+    "app_version": "2.1.5",
     "fips_complaint": false,
     "utctime_updated": "2026-03-10T11:58:48.158Z",
     "package_name": "phantom_akamainetworklists",
-    "python_version": "3.9, 3.13",
+    "python_version": "3.13",
     "main_module": "akamaiwaf_connector.py",
     "min_phantom_version": "7.1.0",
     "configuration": {
@@ -1614,6 +1614,743 @@
                     "data_type": "numeric",
                     "example_values": [
                         1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get client list",
+            "description": "Get a client list",
+            "type": "investigate",
+            "identifier": "get_client_list",
+            "read_only": true,
+            "parameters": {
+                "listId": {
+                    "description": "Unique identifier for each client list. Comma-separated list is allowed",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 0,
+                    "allow_list": true,
+                    "contains": [
+                        "akamai clientlist id"
+                    ],
+                    "primary": true
+                },
+                "includeNetworkList": {
+                    "description": "When enabled, inclues network list in the response (Default: false)",
+                    "data_type": "boolean",
+                    "order": 1
+                },
+                "includeItems": {
+                    "description": "If enabled, the response list includes all items (Default: false)",
+                    "data_type": "boolean",
+                    "order": 2
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.listId",
+                    "data_type": "string",
+                    "contains": [
+                        "akamai clientlist id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.includeNetworkList",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.includeItems",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string",
+                    "column_name": "Name",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.listType",
+                    "data_type": "string",
+                    "column_name": "List Type",
+                    "column_order": 2,
+                    "example_values": [
+                        "CL",
+                        "NL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.itemsCount",
+                    "data_type": "numeric",
+                    "column_name": "Items Count",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.data.*.listId",
+                    "data_type": "string",
+                    "column_name": "Unique ID",
+                    "column_order": 4
+                },
+                {
+                    "data_path": "action_result.data.*.type",
+                    "data_type": "string",
+                    "column_name": "Type",
+                    "column_order": 5,
+                    "example_values": [
+                        "IP",
+                        "GEO",
+                        "ASN",
+                        "TLS_FINGERPRINT",
+                        "FILE_HASH",
+                        "USER_ID",
+                        "DOMAIN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.notes",
+                    "data_type": "string",
+                    "column_name": "Notes",
+                    "column_order": 6
+                },
+                {
+                    "data_path": "action_result.data.*.createDate",
+                    "data_type": "string",
+                    "column_name": "Created Date",
+                    "column_order": 8
+                },
+                {
+                    "data_path": "action_result.data.*.createdBy",
+                    "data_type": "string",
+                    "column_name": "Created By",
+                    "column_order": 9
+                },
+                {
+                    "data_path": "action_result.data.*.updateDate",
+                    "data_type": "string",
+                    "column_name": "Updated Date",
+                    "column_order": 10
+                },
+                {
+                    "data_path": "action_result.data.*.updatedBy",
+                    "data_type": "string",
+                    "column_name": "Updated By",
+                    "column_order": 11
+                },
+                {
+                    "data_path": "action_result.data.*.contractId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deprecated",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.groupId",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.groupName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.productionActivationStatus",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.productionActiveVersion",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.readOnly",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.shared",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.stagingActivationStatus",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.stagingActiveVersion",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.tags",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.version",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.createDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.createdBy",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.createDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.expirationDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.listId",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.productionStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        "INACTIVE",
+                        "PENDING_ACTIVATION",
+                        "ACTIVE",
+                        "MODIFIED",
+                        "PENDING_DEACTIVATION",
+                        "FAILED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.stagingStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        "INACTIVE",
+                        "PENDING_ACTIVATION",
+                        "ACTIVE",
+                        "MODIFIED",
+                        "PENDING_DEACTIVATION",
+                        "FAILED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.tags",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "IP",
+                        "GEO",
+                        "ASN",
+                        "TLS_FINGERPRINT",
+                        "FILE_HASH",
+                        "USER_ID",
+                        "DOMAIN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.updateDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.updatedBy",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.items.*.value",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "activate client list",
+            "description": "Activate a client list",
+            "type": "generic",
+            "identifier": "activate_client_list",
+            "read_only": false,
+            "parameters": {
+                "listId": {
+                    "description": "Unique identifier for each client list. Comma-separated list is allowed",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 0,
+                    "allow_list": true,
+                    "contains": [
+                        "akamai clientlist id"
+                    ],
+                    "primary": true
+                },
+                "action": {
+                    "description": "Actions you can take for a client list: either ACTIVATE OR DEACTIVATE",
+                    "data_type": "string",
+                    "order": 1,
+                    "value_list": [
+                        "ACTIVATE",
+                        "DEACTIVATE"
+                    ],
+                    "default": "ACTIVATE",
+                    "required": true
+                },
+                "network": {
+                    "description": "The network environment where you activate your client list: either STAGING or PRODUCTION.",
+                    "data_type": "string",
+                    "order": 2,
+                    "value_list": [
+                        "STAGING",
+                        "PRODUCTION"
+                    ],
+                    "default": "STAGING",
+                    "required": true
+                },
+                "comments": {
+                    "description": "A brief description for the activation",
+                    "data_type": "string",
+                    "order": 3
+                },
+                "notificationRecipients": {
+                    "description": "Users to notify via email.",
+                    "data_type": "string",
+                    "order": 4
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.listId",
+                    "data_type": "string",
+                    "contains": [
+                        "akamai clientlist id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.action",
+                    "data_type": "string",
+                    "example_values": [
+                        "ACTIVATE",
+                        "DEACTIVATE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.network",
+                    "data_type": "string",
+                    "example_values": [
+                        "STAGING",
+                        "PRODUCTION"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.comments",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.notificationRecipients",
+                    "data_type": "string",
+                    "contains": ["email"]
+                },
+                {
+                    "data_path": "action_result.data.*.activationId",
+                    "data_type": "numeric",
+                    "column_name": "Activation ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.action",
+                    "data_type": "string",
+                    "column_name": "Action",
+                    "column_order": 2,
+                    "example_values": [
+                        "ACTIVATE",
+                        "DEACTIVATE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.activationStatus",
+                    "data_type": "string",
+                    "column_name": "Activation Status",
+                    "column_order": 3,
+                    "example_values": [
+                      "INACTIVE",
+                      "PENDING_ACTIVATION",
+                      "ACTIVE",
+                      "MODIFIED",
+                      "PENDING_DEACTIVATION",
+                      "FAILED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.comments",
+                    "data_type": "string",
+                    "column_name": "Comments",
+                    "column_order": 4
+                },
+                {
+                    "data_path": "action_result.data.*.network",
+                    "data_type": "string",
+                    "column_order": 5,
+                    "column_name": "Network",
+                    "example_values": [
+                      "STAGING",
+                      "PRODUCTION"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.createDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.createdBy",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.updateDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.updatedBy",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.listId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.notificationRecipeints",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.version",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "add client list element",
+            "description": "Add a client list element",
+            "type": "generic",
+            "identifier": "add_client_list_element",
+            "read_only": false,
+            "parameters": {
+                "listId": {
+                    "description": "Unique identifier for each client list.",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 0,
+                    "allow_list": true,
+                    "contains": [
+                        "akamai clientlist id"
+                    ],
+                    "primary": true
+                },
+                "elements": {
+                    "description": "Value of the entry, which is either an IP address, an Autonomous System Number (ASN), a geographic location, a TLS fingerprint, a file hash, a username/user ID, or a domain name. Comma-separated list is allowed",
+                    "data_type": "string",
+                    "order": 1
+                },
+                "description": {
+                    "description": "Any additional description of the client list entry",
+                    "data_type": "string",
+                    "order": 2
+                },
+                "expirationDate": {
+                    "description": "ISO 8601 timestamp indicating when the entry expires.",
+                    "data_type": "string",
+                    "order": 3
+                },
+                "tags": {
+                    "description": "Any defined tags for a specified client list. Comma-separated list is allowed",
+                    "data_type": "string",
+                    "order": 4
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.listId",
+                    "data_type": "string",
+                    "contains": [
+                        "akamai clientlist id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.elements",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.expirationDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.tags",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.value",
+                    "data_type": "string",
+                    "column_name": "Element",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.description",
+                    "data_type": "string",
+                    "column_name": "Description",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.createDate",
+                    "data_type": "string",
+                    "column_name": "Create Date",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.createdBy",
+                    "data_type": "string",
+                    "column_name": "Created By",
+                    "column_order": 4
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.expirationDate",
+                    "data_type": "string",
+                    "column_order": 5,
+                    "column_name": "Expiration Date"
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.stagingStatus",
+                    "data_type": "string",
+                    "column_order": 6,
+                    "column_name": "Staging Status",
+                    "example_values": [
+                        "INACTIVE",
+                        "PENDING_ACTIVATION",
+                        "ACTIVE",
+                        "MODIFIED",
+                        "PENDING_DEACTIVATION",
+                        "FAILED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.productionStatus",
+                    "data_type": "string",
+                    "column_order": 7,
+                    "column_name": "Production Status",
+                    "example_values": [
+                        "INACTIVE",
+                        "PENDING_ACTIVATION",
+                        "ACTIVE",
+                        "MODIFIED",
+                        "PENDING_DEACTIVATION",
+                        "FAILED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.listId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.updateDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.updatedBy",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.tags",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.appended.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "IP",
+                        "GEO",
+                        "ASN",
+                        "TLS_FINGERPRINT",
+                        "FILE_HASH",
+                        "USER_ID",
+                        "DOMAIN"
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "remove client list element",
+            "description": "Remove a client list element",
+            "type": "generic",
+            "identifier": "remove_client_list_element",
+            "read_only": false,
+            "parameters": {
+                "listId": {
+                    "description": "Unique identifier for each client list.",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 0,
+                    "allow_list": true,
+                    "contains": [
+                        "akamai clientlist id"
+                    ],
+                    "primary": true
+                },
+                "elements": {
+                    "description": "Value of the entry, which is either an IP address, an Autonomous System Number (ASN), a geographic location, a TLS fingerprint, a file hash, a username/user ID, or a domain name. Comma-separated list is allowed",
+                    "data_type": "string",
+                    "order": 1
+                },
+                "description": {
+                    "description": "Any additional description of the client list entry",
+                    "data_type": "string",
+                    "order": 2
+                },
+                "expirationDate": {
+                    "description": "ISO 8601 timestamp indicating when the entry expires.",
+                    "data_type": "string",
+                    "order": 3
+                },
+                "tags": {
+                    "description": "Any defined tags for a specified client list. Comma-separated list is allowed",
+                    "data_type": "string",
+                    "order": 4
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.listId",
+                    "data_type": "string",
+                    "contains": [
+                        "akamai clientlist id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.elements",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.expirationDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.tags",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.value",
+                    "data_type": "string",
+                    "column_name": "Element",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.description",
+                    "data_type": "string",
+                    "column_name": "Description",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.createDate",
+                    "data_type": "string",
+                    "column_name": "Create Date",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.createdBy",
+                    "data_type": "string",
+                    "column_name": "Created By",
+                    "column_order": 4
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.expirationDate",
+                    "data_type": "string",
+                    "column_order": 5,
+                    "column_name": "Expiration Date"
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.stagingStatus",
+                    "data_type": "string",
+                    "column_order": 6,
+                    "column_name": "Staging Status",
+                    "example_values": [
+                        "INACTIVE",
+                        "PENDING_ACTIVATION",
+                        "ACTIVE",
+                        "MODIFIED",
+                        "PENDING_DEACTIVATION",
+                        "FAILED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.productionStatus",
+                    "data_type": "string",
+                    "column_order": 7,
+                    "column_name": "Production Status",
+                    "example_values": [
+                        "INACTIVE",
+                        "PENDING_ACTIVATION",
+                        "ACTIVE",
+                        "MODIFIED",
+                        "PENDING_DEACTIVATION",
+                        "FAILED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.listId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.updateDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.updatedBy",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.tags",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deleted.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "IP",
+                        "GEO",
+                        "ASN",
+                        "TLS_FINGERPRINT",
+                        "FILE_HASH",
+                        "USER_ID",
+                        "DOMAIN"
                     ]
                 }
             ],
