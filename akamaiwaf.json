@@ -21,7 +21,7 @@
     "package_name": "phantom_akamainetworklists",
     "python_version": "3.13",
     "main_module": "akamaiwaf_connector.py",
-    "min_phantom_version": "7.0.0",
+    "min_phantom_version": "6.3.0",
     "configuration": {
         "base_url": {
             "description": "Base URL for the API. This URL is given to you when you setup the API Client in the Akamai Control Center. e.g. https://akaa-WWWWWWWWWWWW.luna.akamaiapis.net",
@@ -2437,12 +2437,12 @@
     "pip39_dependencies": {
         "wheel": [
             {
-                "module": "edgegrid-python",
-                "input_file": "wheels/py3/edgegrid_python-2.0.5-py3-none-any.whl"
+                "module": "edgegrid_python",
+                "input_file": "wheels/py3/edgegrid_python-2.0.2-py3-none-any.whl"
             },
             {
-                "module": "reqeusts_toolbelt",
-                "input_file": "wheels/py3/requests_toolbelt-1.0.0-py2.py3-none-any.whl"
+                "module": "requests_toolbelt",
+                "input_file": "wheels/shared/requests_toolbelt-1.0.0-py2.py3-none-any.whl"
             }
         ]
     },
