@@ -1627,10 +1627,10 @@
         "wheel": [
             {
                 "module": "edgegrid-python",
-                "input_file": "wheels/shared/edgegrid_python-2.0.2-py3-none-any.whl"
+                "input_file": "wheels/py3/edgegrid_python-2.0.2-py3-none-any.whl"
             },
             {
-                "module": "reqeusts_toolbelt",
+                "module": "requests_toolbelt",
                 "input_file": "wheels/shared/requests_toolbelt-1.0.0-py2.py3-none-any.whl"
             }
         ]
