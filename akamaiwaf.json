@@ -1626,7 +1626,7 @@
     "pip39_dependencies": {
         "wheel": [
             {
-                "module": "edgegrid-python",
+                "module": "edgegrid_python",
                 "input_file": "wheels/py3/edgegrid_python-2.0.2-py3-none-any.whl"
             },
             {
