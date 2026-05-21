@@ -1,9 +1,9 @@
 # Akamai WAF
 
-Publisher: Robert Drouin \
-Connector Version: 2.1.3 \
-Product Vendor: Akamai \
-Product Name: Network Lists \
+Publisher: Robert Drouin <br>
+Connector Version: 2.1.4 <br>
+Product Vendor: Akamai <br>
+Product Name: Network Lists <br>
 Minimum Product Version: 6.3.0
 
 The WAF API allows you to manage a common set of lists for use in various Akamai security products such as Kona Site Defender, Web App Protector, and Bot Manager
@@ -33,28 +33,29 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **access_token** | required | password | Access Token for the API |
 **client_token** | required | password | Client Token for the API |
 **client_secret** | required | password | Client Secret for the API |
+**akamai_verify_ssl** | optional | boolean | Verify SSL certificates |
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration \
-[list networks](#action-list-networks) - Get a network list \
-[get network](#action-get-network) - Gets a network list's most recent syncPoint version \
-[create network](#action-create-network) - Create a new network list \
-[delete network](#action-delete-network) - Removes a network list \
-[update network](#action-update-network) - Update the network list items and properties \
-[add element](#action-add-element) - Adds the specified element(s) to a list \
-[remove element](#action-remove-element) - Remove the specified element(s) from the list \
-[activate network](#action-activate-network) - Activate the most recent syncPoint version of a network list in either the STAGING or PRODUCTION environment \
-[activation status](#action-activation-status) - Shows a network list activation status on either the STAGING or PRODUCTION environment \
-[activation snapshot](#action-activation-snapshot) - Gets a version of a network list \
-[activation details](#action-activation-details) - Provides detailed status for a given activation \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration <br>
+[list networks](#action-list-networks) - Get a network list <br>
+[get network](#action-get-network) - Gets a network list's most recent syncPoint version <br>
+[create network](#action-create-network) - Create a new network list <br>
+[delete network](#action-delete-network) - Removes a network list <br>
+[update network](#action-update-network) - Update the network list items and properties <br>
+[add element](#action-add-element) - Adds the specified element(s) to a list <br>
+[remove element](#action-remove-element) - Remove the specified element(s) from the list <br>
+[activate network](#action-activate-network) - Activate the most recent syncPoint version of a network list in either the STAGING or PRODUCTION environment <br>
+[activation status](#action-activation-status) - Shows a network list activation status on either the STAGING or PRODUCTION environment <br>
+[activation snapshot](#action-activation-snapshot) - Gets a version of a network list <br>
+[activation details](#action-activation-details) - Provides detailed status for a given activation <br>
 [list siteshields](#action-list-siteshields) - Get akamai site shields ip ranges
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using the supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -69,7 +70,7 @@ No Output
 
 Get a network list
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 List all network lists available for an authenticated user who belongs to a group, optionally filtered by listType or based on a search string. For <strong>extended</strong> parameter, when enabled, provides additional response data identifying who and when the lists were created and updated, and the network list's deployment status in both STAGING and PRODUCTION environments. For <strong>includeelements</strong> parameter, if enabled, the response list includes all items. For large network lists, this may slow responses and yield large response objects. Results appear within the networkLists array, which might be empty if no network lists are available to the client.
@@ -110,7 +111,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Gets a network list's most recent syncPoint version
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 For <strong>extended</strong> parameter, when enabled, provides additional response data identifying who and when the lists were created and updated, and the network list's deployment status in both STAGING and PRODUCTION environments. For <strong>includeelements</strong> parameter, if enabled, the response list includes all items. For large network lists, this may slow responses and yield large response objects.
@@ -151,7 +152,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Create a new network list
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -187,7 +188,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Removes a network list
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 You can only remove network lists that never activated. To deactivate a list, you can empty its list of elements.
@@ -216,7 +217,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Update the network list items and properties
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 Allows you to set the name, description, and set of network list items to the resource. The current state of the list will be replaced with the properties and items you provide. The type cannot be changed.
@@ -252,7 +253,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Adds the specified element(s) to a list
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 If the network list's type is IP, the value needs to be a URL-encoded IP address or CIDR block.
@@ -287,7 +288,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Remove the specified element(s) from the list
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 If the network list's type is IP, the value needs to be a URL-encoded IP address or CIDR block.
@@ -322,7 +323,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Activate the most recent syncPoint version of a network list in either the STAGING or PRODUCTION environment
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -359,7 +360,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Shows a network list activation status on either the STAGING or PRODUCTION environment
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -392,7 +393,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Gets a version of a network list
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 Gets a version of a network list in its state when activated, with each version identified by its syncPoint value. You can only get syncPoint versions that have been activated. For <strong>extended</strong> parameter, when enabled, provides additional response data identifying who and when the lists were created and updated, and the network list's deployment status in both STAGING and PRODUCTION environments.
@@ -429,7 +430,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Provides detailed status for a given activation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 Provides detailed status for a given activation, including progress on fast activation and other audit information, in addition to information ordinarily available from the "activation status" action.
@@ -464,7 +465,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Get akamai site shields ip ranges
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -486,7 +487,7 @@ ______________________________________________________________________
 
 Auto-generated Splunk SOAR Connector documentation.
 
-Copyright 2025 Splunk Inc.
+Copyright 2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

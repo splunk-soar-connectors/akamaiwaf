@@ -14,15 +14,14 @@
             "name": "Nikhilesh Chaudhari"
         }
     ],
-    "license": "Copyright (c) Robert Drouin, 2021-2025",
-    "app_version": "2.1.3",
+    "license": "Copyright (c) Robert Drouin, 2021-2026",
+    "app_version": "2.1.4",
     "fips_complaint": false,
-    "utctime_updated": "2025-04-28T18:48:21.510085Z",
+    "utctime_updated": "2026-03-10T11:58:48.158Z",
     "package_name": "phantom_akamainetworklists",
-    "python_version": "3",
+    "python_version": "3.9, 3.13",
     "main_module": "akamaiwaf_connector.py",
     "min_phantom_version": "6.3.0",
-    "app_wizard_version": "1.0.0",
     "configuration": {
         "base_url": {
             "description": "Base URL for the API. This URL is given to you when you setup the API Client in the Akamai Control Center. e.g. https://akaa-WWWWWWWWWWWW.luna.akamaiapis.net",
@@ -47,6 +46,12 @@
             "data_type": "password",
             "required": true,
             "order": 3
+        },
+        "akamai_verify_ssl": {
+            "description": "Verify SSL certificates",
+            "data_type": "boolean",
+            "default": true,
+            "order": 4
         }
     },
     "actions": [
@@ -1619,9 +1624,27 @@
         }
     ],
     "pip39_dependencies": {
-        "wheel": []
+        "wheel": [
+            {
+                "module": "edgegrid_python",
+                "input_file": "wheels/py3/edgegrid_python-2.0.2-py3-none-any.whl"
+            },
+            {
+                "module": "requests_toolbelt",
+                "input_file": "wheels/shared/requests_toolbelt-1.0.0-py2.py3-none-any.whl"
+            }
+        ]
     },
     "pip313_dependencies": {
-        "wheel": []
+        "wheel": [
+            {
+                "module": "edgegrid_python",
+                "input_file": "wheels/py3/edgegrid_python-2.0.5-py3-none-any.whl"
+            },
+            {
+                "module": "requests_toolbelt",
+                "input_file": "wheels/shared/requests_toolbelt-1.0.0-py2.py3-none-any.whl"
+            }
+        ]
     }
 }
