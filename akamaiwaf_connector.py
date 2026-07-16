@@ -20,9 +20,9 @@ from akamaiwaf_consts import *
 
 
 try:
-    from urllib import unquote
+    from urllib import quote, unquote
 except:
-    from urllib.parse import unquote
+    from urllib.parse import quote, unquote
 # Import Akamai Edgegrid authentication module
 from akamai.edgegrid import EdgeGridAuth
 
@@ -42,6 +42,10 @@ class AkamaiNetworkListsConnector(BaseConnector):
         self._client_token = None
         self._client_secret = None
         self._access_token = None
+
+    @staticmethod
+    def _encode_path_segment(value):
+        return quote(str(value), safe="")
 
     def _validate_integer(self, action_result, parameter, key):
         if parameter is not None:
@@ -282,7 +286,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
         # Loop through each Network ID to retrive the data.
         for networklist in param_networklistid:
             # Format the URI
-            endpoint = AKAMAI_API_PATH + self._process_parameters(f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{networklist}", params)
+            network_list_id = self._encode_path_segment(networklist)
+            endpoint = AKAMAI_API_PATH + self._process_parameters(f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}", params)
 
             # make rest call
             ret_val, response = self._make_rest_call(endpoint, action_result, params=None, headers=None)
@@ -312,7 +317,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
             # Can assign manually but it wont be as flexible if the API changes.
             params = {"element": param.get("elements")}
 
-            endpoint = self._process_parameters("{}/{}/elements".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get("networklistid")), params)
+            network_list_id = self._encode_path_segment(param.get("networklistid"))
+            endpoint = self._process_parameters(f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}/elements", params)
             endpoint = AKAMAI_API_PATH + endpoint
 
             # make rest call
@@ -324,7 +330,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
                 # Add element to the list
                 data["list"].append(element)
 
-            endpoint = "{}/{}/append".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get("networklistid"))
+            network_list_id = self._encode_path_segment(param.get("networklistid"))
+            endpoint = f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}/append"
             endpoint = AKAMAI_API_PATH + endpoint
 
             # make rest call
@@ -352,7 +359,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
             # Can assign manually but it wont be as flexible if the API changes.
             params = {"element": param.get("elements")}
 
-            endpoint = self._process_parameters("{}/{}/elements".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get("networklistid")), params)
+            network_list_id = self._encode_path_segment(param.get("networklistid"))
+            endpoint = self._process_parameters(f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}/elements", params)
             endpoint = AKAMAI_API_PATH + endpoint
 
             # make rest call
@@ -363,7 +371,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
             # Need to get the list of items before we can remove them. We also need other data to be able to update the network list.
             # Format the URI
-            endpoint = "{}/{}".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get("networklistid"))
+            network_list_id = self._encode_path_segment(param.get("networklistid"))
+            endpoint = f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}"
             endpoint = AKAMAI_API_PATH + endpoint
 
             # make rest call
@@ -442,7 +451,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         # Access action parameters passed in the 'param' dictionary
-        endpoint = "{}/{}/details".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get("networklistid"))
+        network_list_id = self._encode_path_segment(param.get("networklistid"))
+        endpoint = f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}/details"
         endpoint = AKAMAI_API_PATH + endpoint
         data = {"name": param.get("name"), "description": param.get("description")}
 
@@ -463,7 +473,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
 
         # Access action parameters passed in the 'param' dictionary
 
-        endpoint = "{}/{}".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get("networklistid"))
+        network_list_id = self._encode_path_segment(param.get("networklistid"))
+        endpoint = f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}"
         endpoint = AKAMAI_API_PATH + endpoint
 
         # make rest call
@@ -505,7 +516,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
                 phantom.APP_ERROR, f"Please provide valid input from {ENVIRONMENT_VALUE_LIST} in 'environment' action parameter"
             )
 
-        endpoint = "{}/{}/environments/{}/activate".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get("networklistid"), environment)
+        network_list_id = self._encode_path_segment(param.get("networklistid"))
+        endpoint = f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}/environments/{environment}/activate"
         endpoint = AKAMAI_API_PATH + endpoint
 
         # make rest call
@@ -529,7 +541,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
                 phantom.APP_ERROR, f"Please provide valid input from {ENVIRONMENT_VALUE_LIST} in 'environment' action parameter"
             )
 
-        endpoint = "{}/{}/environments/{}/status".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get("networklistid"), environment)
+        network_list_id = self._encode_path_segment(param.get("networklistid"))
+        endpoint = f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}/environments/{environment}/status"
         endpoint = AKAMAI_API_PATH + endpoint
 
         # make rest call
@@ -553,9 +566,8 @@ class AkamaiNetworkListsConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        endpoint = self._process_parameters(
-            "{}/{}/sync-points/{}/history".format(AKAMAI_NETWORK_LIST_ENDPOINT, param.get("networklistid"), syncpoint), params
-        )
+        network_list_id = self._encode_path_segment(param.get("networklistid"))
+        endpoint = self._process_parameters(f"{AKAMAI_NETWORK_LIST_ENDPOINT}/{network_list_id}/sync-points/{syncpoint}/history", params)
         endpoint = AKAMAI_API_PATH + endpoint
 
         # make rest call
