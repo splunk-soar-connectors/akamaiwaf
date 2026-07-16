@@ -222,7 +222,7 @@ class AkamaiNetworkListsConnector(BaseConnector):
         self.save_progress("Connecting to endpoint")
 
         # make rest call
-        ret_val, response = self._make_rest_call(f"{AKAMAI_API_PATH}{AKAMAI_NETWORK_LIST_ENDPOINT}", action_result, params=None, headers=None)
+        ret_val, _response = self._make_rest_call(f"{AKAMAI_API_PATH}{AKAMAI_NETWORK_LIST_ENDPOINT}", action_result, params=None, headers=None)
 
         if phantom.is_fail(ret_val):
             self.save_progress("Test Connectivity Failed")
