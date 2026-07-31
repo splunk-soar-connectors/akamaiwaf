@@ -1,1 +1,3 @@
 **Unreleased**
+
+* Reject network list dot-segment identifiers before constructing API paths.
