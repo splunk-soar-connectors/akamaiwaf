@@ -47,6 +47,10 @@ class AkamaiNetworkListsConnector(BaseConnector):
     def _encode_path_segment(value):
         return quote(str(value), safe="")
 
+    @staticmethod
+    def _contains_dot_segment(value):
+        return any(identifier.strip() in {".", ".."} for identifier in str(value).split(","))
+
     def _validate_integer(self, action_result, parameter, key):
         if parameter is not None:
             try:
@@ -777,6 +781,10 @@ class AkamaiNetworkListsConnector(BaseConnector):
         :return: status success/failure
         """
         self.debug_print(f"action_id: {self.get_action_identifier()}")
+
+        if "networklistid" in param and self._contains_dot_segment(param["networklistid"]):
+            action_result = self.add_action_result(ActionResult(dict(param)))
+            return action_result.set_status(phantom.APP_ERROR, "Invalid networklistid: dot segments are not allowed")
 
         action_mapping = {
             "test_connectivity": self._handle_test_connectivity,
